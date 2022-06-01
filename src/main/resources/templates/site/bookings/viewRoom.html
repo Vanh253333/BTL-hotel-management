@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+</head>
+
+<body>
+	<section class="row" layout:fragment="content">
+		<div class="col mt-4">
+			<form enctype="multipart/form-data" th:object="${room}">
+				<div class="card">
+
+					<div class="card-header">
+						<h2>View Room</h2>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-7">
+
+								<div class="form-group">
+									<label for="name">Name</label> <input type="text"
+										class="form-control" name="name" id="name" th:field="*{name}"
+										aria-describedby="nameHid" placeholder="name" readonly> 
+								</div>
+
+								<div class="form-group">
+									<label for="type">Type</label> <input type="text"
+										class="form-control" name="type" id="type" th:field="*{type}"
+										aria-describedby="typeHid" placeholder="type" readonly> 
+								</div>
+
+								<div class="input-group form-group">
+									<span class="input-group-text">Price</span> <input
+										type="number" name="price" id="price"
+										th:field="*{price}" class="form-control"
+										placeholder="pprice" readonly> <span
+										class="input-group-text">VND</span>
+								</div>
+
+								<div class="form-group">
+									<label for="hotelId">Hotel</label> <select class="form-control"
+										name="hotelId" id="hotelId" th:field="*{hotelId}">
+										<option th:each="item : ${hotels}" th:value="${item.hotelId}"
+											th:text="${item.name}"
+											th:selected="${item.hotelId == room.hotelId}" value="">Hotel
+											name</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-3">
+
+								<img id="image"
+									th:src="${'/admin/rooms/images/' + room.image}"
+									src="/images/add-image.png" width="90%" class="img-fluid "
+									alt="">
+								<div class="form-group">
+									<label for="roomImage">Image File</label> 
+								</div>
+
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+									<label for="description">Decription</label>
+									<textarea class="form-control" name="description"
+										th:field="*{description}" id="description" rows="5"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer text-muted">				
+						<a th:if="${room.isEdit}" 
+							th:href="@{'/admin/rooms/delete' + ${room.roomId}}" 
+							class="btn btn-danger float-right">Delete</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+
+</html>
